@@ -46,9 +46,10 @@ app.post("/forgot-password", (req, res, next)=>{
 
     const token = jwt.sign(payload, secretNew, {expiresIn: "15m"})
 
+    const link = `http://localhost:5050/reset-password/${user.id}/${token}`
     
-
-
+    console.log(link)
+    res.send('Pass link has beend sent to your email...')
 
     //--------------------------
 
