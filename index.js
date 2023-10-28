@@ -46,7 +46,7 @@ app.post("/forgot-password", (req, res, next)=>{
 
     const token = jwt.sign(payload, secretNew, {expiresIn: "15m"})
 
-    const link = `http://localhost:5050/reset-password/${user.id}/${token}`
+    const link = `http://localhost:5050/reset-password/${user.id}/${token}` //who ever clicks on that link it should be routed to /reset-password/:id/:token
     
     console.log(link)
     res.send('Pass link has beend sent to your email...')
@@ -56,11 +56,54 @@ app.post("/forgot-password", (req, res, next)=>{
 
 })
 
-app.get("/reset-password", (req, res, next)=>{
+app.get("/reset-password/:id/:token", (req, res, next)=>{
+    const {id, token} = req.params
+    
+    //-----Check if id exist in DB -----
+    if(id !== user.id){
+        res.send("Invalid id!")
+        reutrn
+    }
+    //-----------------------------
+
+    // ----- If ID is valid, we have a valid user ---------
+    const secret = JWT_SECRET + user.password // this is the same as secretNew
+    try {
+        const payload = jwt.verify(token, secret)
+        res.render('resetPass', {email: user.email})
+        
+    } catch (error) {
+        console.log(error.message)
+        res.send(error.message)
+    }
+    //---------------------------
 
 })
 
-app.post("/reset-password", (req, res, next)=>{
+app.post("/reset-password/:id/:token", (req, res, next)=>{
+
+    const {id, token} = req.params
+
+        //-----Check if id exist in DB -----
+        if(id !== user.id){
+            res.send("Invalid id!")
+            reutrn
+        }
+        //-----------------------------
+
+
+        // ----- If ID is valid, we have a valid user ---------
+        const secret = JWT_SECRET + user.password // this is the same as secretNew
+        try {
+            const payload = jwt.verify(token, secret)
+
+            
+        } catch (error) {
+            console.log(error.message)
+            res.send(error.message)
+        }
+        //---------------------------
+
 
 })
 
