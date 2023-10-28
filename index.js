@@ -19,8 +19,9 @@ let user = {
 
 //---- JWT config--------
 const JWT_SECRET = "some super secret..."
-
 //----------------------
+
+
 
 app.get("/forgot-password", (req, res, next)=>{
  res.render('forgotPass')
