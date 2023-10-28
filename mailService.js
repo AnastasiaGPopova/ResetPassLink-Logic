@@ -44,9 +44,7 @@ exports.sendEmail = async(email, link) => {
         return result
         
     } catch (error) {
-        console.log(error.message)
-
-        
+        console.log(error.message)   
     }
 
 }
