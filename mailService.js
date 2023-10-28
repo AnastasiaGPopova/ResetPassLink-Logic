@@ -14,7 +14,7 @@ oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 exports.sendEmail = async(email, link) => {
 
     const mailOptions = {
-        from: "ana.test@gmail",
+        from: "Fakturiko Team",
         to: email,
         subject: "Pass reset",
         text: `Click on the link: + "" + ${link}`,
