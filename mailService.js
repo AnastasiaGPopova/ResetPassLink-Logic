@@ -11,31 +11,34 @@ const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_U
 oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN})
 
 
-async function sendEmail() {
+exports.sendEmail = async(email, link) => {
+
+    const mailOptions = {
+        from: "ana.test@gmail",
+        to: email,
+        subject: "Pass reset",
+        text: `Click on the link: + "" + ${link}`,
+        html:`<h1>Pass reset Link</h1>
+               <p>Press the link below</p>
+               <p>${link}</p>`
+    }
 
     try {
 
         const accessToken = await oAuth2Client.getAccessToken()
+
         const transport = nodemailer.createTransport({
             service: "gmail",
             auth: {
                 type: "OAuth2",
                 user: "ana.popova.register@gmail.com",
                 clientId: CLIENT_ID,
-                client_secret: CLIENT_SECRET,
+                clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
                 accessToken: accessToken
             }
         })
 
-
-        const mailOptions = {
-            from: "ana.test@gmail",
-            to: "ana.popovaaa@gmail.com",
-            subject: "Hello From App",
-            text: "Hey, did it work?",
-            html:"<h1>Hey, did it work?</h1>"
-        }
 
         const result = await transport.sendMail(mailOptions)
         return result
@@ -49,5 +52,5 @@ async function sendEmail() {
 }
 
 
-sendEmail().then((result) => console.log('Email sent...', result))
-           .catch((error) => console.log(error.message));
+// sendEmail().then((result) => console.log('Email sent...', result))
+//            .catch((error) => console.log(error.message));

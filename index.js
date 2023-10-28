@@ -1,4 +1,5 @@
 const express = require('express')
+const EmailService = require('./mailService.js');
 const jwt = require('jsonwebtoken')
 
 const app = express()
@@ -10,7 +11,7 @@ app.set('view engine', 'ejs')
 //-----------Data base* Hardcore user----------
 let user = {
     id: "ahjhiudguihs",
-    email: "john@yahoo.com",
+    email: "ana.popovaaa@gmail.com",
     password: "hhiuhiaufhuafhjhg;jhafhuaighaigh"
 }
 //------------------------------------------------
@@ -49,6 +50,7 @@ app.post("/forgot-password", (req, res, next)=>{
     const link = `http://localhost:5050/reset-password/${user.id}/${token}` //who ever clicks on that link it should be routed to /reset-password/:id/:token
     
     console.log(link)
+    EmailService.sendEmail(payload.email, link)
     res.send('Pass link has beend sent to your email...')
 
     //--------------------------
