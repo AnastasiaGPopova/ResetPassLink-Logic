@@ -16,6 +16,11 @@ let user = {
 //------------------------------------------------
 
 
+//---- JWT config--------
+const JWT_SECRET = "some super secret..."
+
+//----------------------
+
 app.get("/forgot-password", (req, res, next)=>{
  res.render('forgotPass')
 })
@@ -33,6 +38,13 @@ app.post("/forgot-password", (req, res, next)=>{
 
     //--- Create one time password link, valid for 15 min----
 
+    const secretNew = JWT_SECRET + user.password //it will be unique for each user
+    const payload = {
+        email: user.email,
+        id: user.id
+    }
+
+    const token = jwt.sign(payload, secretNew, {expiresIn: "15m"})
 
     
 
