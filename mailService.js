@@ -51,6 +51,3 @@ exports.sendEmail = async(email, link) => {
 
 }
 
-
-// sendEmail().then((result) => console.log('Email sent...', result))
-//            .catch((error) => console.log(error.message));
