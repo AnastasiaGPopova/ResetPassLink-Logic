@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.set('view engine', 'ejs')
 
-//-----------Data base* Hardcore user----------
+//-----------Data base* Hardcoded user----------
 let user = {
     id: "ahjhiudguihs",
     email: "ana.popovaaa@gmail.com",
@@ -57,6 +57,8 @@ app.post("/forgot-password", (req, res, next)=>{
 
 
 })
+
+
 
 app.get("/reset-password/:id/:token", (req, res, next)=>{
     const {id, token} = req.params
