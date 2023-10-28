@@ -80,9 +80,12 @@ app.get("/reset-password/:id/:token", (req, res, next)=>{
 
 })
 
+
+
 app.post("/reset-password/:id/:token", (req, res, next)=>{
 
     const {id, token} = req.params
+    const {password, passwordRe} = req.body
 
         //-----Check if id exist in DB -----
         if(id !== user.id){
@@ -97,6 +100,19 @@ app.post("/reset-password/:id/:token", (req, res, next)=>{
         try {
             const payload = jwt.verify(token, secret)
 
+            //-- Validate if password and passwordRe match----
+            if(password !== passwordRe){
+                res.send("Password do not match!")
+                return
+            }
+            //--------------------------
+
+
+            //---Find the user in the DB and update new pass ---
+            //Always hash the new password
+            user.password = password
+            res.send(user)
+            //---------------------
             
         } catch (error) {
             console.log(error.message)
